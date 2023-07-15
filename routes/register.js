@@ -4,8 +4,10 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
 
+
 router.get("/register", (req, res) => {
-  res.send("Register here!");
+
+  res.status(200).json({message: "Use API POST Method to Register"});
 });
 
 router.post("/register", async (req, res) => {
