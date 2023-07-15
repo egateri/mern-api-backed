@@ -5,14 +5,15 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-
-  res.status(200).json({message:"To Login with Token. PLease use the API POST Method"});
+  res
+    .status(200)
+    .json({ message: "To Login with Token. PLease use the API POST Method" });
 });
 
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-   
+
     if (!(email && password)) {
       return res.status(400).json({ message: "All inputs are required" });
     }
@@ -25,7 +26,6 @@ router.post("/login", async (req, res) => {
     await bcrypt
       .compare(password, user.password)
       .then((result) => {
-       
         if (result) {
           const token = jwt.sign(
             { user_id: user._id, name: user.first_name, email },
@@ -35,16 +35,14 @@ router.post("/login", async (req, res) => {
 
           user.token = token;
 
-          return res
-            .status(200)
-            .json({
-              message: "Success",
-              user_id: user._id,
-              first_name: user.first_name,
-              last_name: user.last_name,
-              email: user.email,
-              token: user.token,
-            });
+          return res.status(200).json({
+            message: "Success",
+            user_id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            token: user.token,
+          });
         } else {
           return res.status(201).json({ message: "Invalid Credentials" });
         }

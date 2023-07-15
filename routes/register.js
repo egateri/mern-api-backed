@@ -4,10 +4,8 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
 
-
 router.get("/register", (req, res) => {
-
-  res.status(200).json({message: "Use API POST Method to Register"});
+  res.status(200).json({ message: "Use API POST Method to Register" });
 });
 
 router.post("/register", async (req, res) => {
@@ -16,16 +14,17 @@ router.post("/register", async (req, res) => {
 
     if (!(email && password && first_name && last_name)) {
       return res.status(400).json({ message: "All inputs are required" });
-      
     }
 
-    const existingUser = await User.findOne({ email:email});
+    const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      return res.status(201).json({ message: "User Already exists. Please Login" });
+      return res
+        .status(201)
+        .json({ message: "User Already exists. Please Login" });
     } else {
       const encryptedPassword = await bcrypt.hash(password, 10);
-      
+
       const user = await User.create({
         first_name,
         last_name,
@@ -35,11 +34,11 @@ router.post("/register", async (req, res) => {
       const token = jwt.sign(
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
-        { expiresIn: process.env.JWT_EXPIRES_IN, }
+        { expiresIn: process.env.JWT_EXPIRES_IN }
       );
       user.token = token;
 
-      return res.status(201).json({message:"success", user:user});
+      return res.status(201).json({ message: "success", user: user });
     }
   } catch (error) {
     console.log(error);
