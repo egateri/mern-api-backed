@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/loginwithcookie", (req, res) => {
 
-  res.send("Login With Cookie");
+    res.status(200).json({message:"To Login with Cookie. Please use the API POST Method"});
 });
 
 router.post("/loginwithcookie", async (req, res) => {

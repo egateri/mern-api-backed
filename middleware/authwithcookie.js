@@ -6,7 +6,7 @@ const verifyCookie = (req, res, next)=>{
     const token = req.body.token||req.query.token||req.headers["x-access-token"];
 
     if(!token){
-        return res.status(200).send("A token is required for authentication");
+        return res.status(200).json({message:"A Cookie is required for authentication"});
        
     }
     try {
@@ -19,7 +19,7 @@ const verifyCookie = (req, res, next)=>{
         
     } catch (err) {
         
-        return res.status(200).json("Invalid Token");
+        return res.status(200).json({message:"Invalid Token"});
     }
     return next();
 }

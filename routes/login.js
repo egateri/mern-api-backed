@@ -5,7 +5,8 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-  res.send("Login");
+
+  res.status(200).json({message:"To Login with Token. PLease use the API POST Method"});
 });
 
 router.post("/login", async (req, res) => {
