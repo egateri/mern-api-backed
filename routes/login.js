@@ -11,10 +11,8 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    // const { email, password } = req.body;
-    const email = req.body.email;
-    const password = req.body.password;
-
+    const { email, password } = req.body;
+   
     if (!(email && password)) {
       return res.status(400).json({ message: "All inputs are required" });
     }
@@ -27,7 +25,7 @@ router.post("/login", async (req, res) => {
     await bcrypt
       .compare(password, user.password)
       .then((result) => {
-        // console.log(result);
+       
         if (result) {
           const token = jwt.sign(
             { user_id: user._id, name: user.first_name, email },

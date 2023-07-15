@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
 
     if (!(email && password && first_name && last_name)) {
       return res.status(400).json({ message: "All inputs are required" });
-      // res.status(400).send("All inputs are required");
+      
     }
 
     const existingUser = await User.findOne({ email:email});
@@ -25,7 +25,7 @@ router.post("/register", async (req, res) => {
       return res.status(201).json({ message: "User Already exists. Please Login" });
     } else {
       const encryptedPassword = await bcrypt.hash(password, 10);
-      //    console.log("Encrypted password  "+encryptedPassword);
+      
       const user = await User.create({
         first_name,
         last_name,
