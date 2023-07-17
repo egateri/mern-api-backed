@@ -11,11 +11,39 @@ router.get("/loginwithcookie", (req, res) => {
     .json({ message: "To Login with Cookie. Please use the API POST Method" });
 });
 
+router.get("/logout", (req, res) => {
+  const { cookies } = req;
+
+  const jwt = cookies?.token;
+
+  if (!jwt) {
+    return res.status(401).json({
+      status: 'error',
+      error: 'Unauthorized',
+    });
+  }
+
+  const serialized = serialize('token', null, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: -1,
+    path: '/',
+  });
+  res.setHeader('Set-Cookie', serialized);
+  res.status(200).json({
+    status: 'success',
+    message: 'Logged out',
+  });
+});
+
 router.get("/loginwithcookietest", async (req, res) => {
 try {
   
 
-  const { email, password } = req.body;
+  // const { email, password } = req.body;
+  const email = "eliud@eliud.com";
+  const password = "eliud";
 
   if (!email || !password) {
     return res.status(401).json({
@@ -37,8 +65,8 @@ try {
         id: user._id,
         email: user.email,
         createdAt: user.createdAt,
-        username: user.username,
-        fullname: user.fullname,
+        first_name: user.first_name,
+        last_name: user.last_name,
       };
       jwt.sign(
         payload,
@@ -48,7 +76,7 @@ try {
         },
         (_err, token) => {
           const serialized = serialize('token', token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 60 * 60 * 24 * 30,
@@ -58,9 +86,10 @@ try {
           res.status(200).json({
             success: true,
             user: {
+              id:payload.id,
               email: payload.email,
-              username: payload.username,
-              fullname: payload.fullname,
+              first_name: payload.first_name,
+              last_name: payload.last_name,
             },
           });
         },

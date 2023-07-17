@@ -5,6 +5,7 @@ const registerRouter = require('./routes/register');
 const protectedRouter = require('./routes/protected');
 const publicRouter = require('./routes/public');
 const loginRouter = require('./routes/login');
+const logOutRouter = require('./routes/logout');
 const loginWithCookieRouter = require('./routes/loginwithcookie');
 const notFoundRouter = require('./routes/notfound');
 const express = require('express');
@@ -18,6 +19,7 @@ app.use(registerRouter);
 app.use(protectedRouter);
 app.use(publicRouter);
 app.use(loginRouter);
+app.use(logOutRouter);
 app.use(loginWithCookieRouter);
 app.use(notFoundRouter);
 app.listen(PORT,()=>{
