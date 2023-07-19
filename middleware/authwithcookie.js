@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 const verifyCookie = (req, res, next) => {
-  const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
+  // const token =req.body.token || req.query.token || req.headers["x-access-token"]||req.cookie.token;
 
+  const {token} = req.cookies;
+
+    console.log(token);
   if (!token) {
     return res
       .status(200)

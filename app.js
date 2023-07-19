@@ -1,6 +1,8 @@
+
 require('dotenv').config();
 const db =require('./config/database');
 const cors =require('cors')
+const cookieParser = require('cookie-parser');
 const registerRouter = require('./routes/register');
 const protectedRouter = require('./routes/protected');
 const publicRouter = require('./routes/public');
@@ -12,7 +14,8 @@ const express = require('express');
 const PORT = process.env.PORT;
 const app = express();
 app.set(db);
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 app.use(cors());
 app.use(registerRouter);
