@@ -31,7 +31,7 @@ try {
   if (!user) {
     return res.status(400).json({ message: "User does not exists" });
   }
-  console.log(process.env.NODE_ENV);
+  // console.log(process.env.NODE_ENV);
   // res.json(user);
 
   bcrypt.compare(password, user.password).then((isMatch) => {
