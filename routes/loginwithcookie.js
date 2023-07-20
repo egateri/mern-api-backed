@@ -51,8 +51,8 @@ try {
         },
         (_err, token) => {
           const serialized = serialize('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'dev',
             sameSite: 'strict',
             maxAge: 60 * 60 * 24 * 30,
             path: '/',
