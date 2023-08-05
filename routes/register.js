@@ -37,6 +37,7 @@ router.post("/register", async (req, res) => {
         { expiresIn: process.env.JWT_EXPIRES_IN }
       );
       user.token = token;
+      user.password = null;
 
       return res.status(201).json({ message: "success", user: user });
     }
