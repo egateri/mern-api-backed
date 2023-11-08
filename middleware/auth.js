@@ -1,7 +1,14 @@
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-  const token = req.body.token ||req.cookies|| req.query.token || req.headers["x-access-token"];
+  // const token = req.body.token ||req.cookies|| req.query.token || req.headers["token"];
+  // const token = req.header("token"); Ok
+  // const token = req.headers["token"]; OK
+  // const token = req.body.token; ok
+  //  const token = req.query.token; Ok - but not safe to pass token via URL?? 
+  //const token = req.cookies ; Not OK --require cookie-parse??
+
+  const token = req.body.token || req.query.token || req.headers["token"]||req.header("token");
 
   if (!token) {
     return res
